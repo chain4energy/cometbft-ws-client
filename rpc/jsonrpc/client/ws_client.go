@@ -475,10 +475,6 @@ func (c *WSClient) readRoutine() {
 		}
 		_, data, err := c.conn.ReadMessage()
 		if err != nil {
-			if !websocket.IsUnexpectedCloseError(err, websocket.CloseNormalClosure) {
-				return
-			}
-
 			c.Logger.Error("failed to read response", "err", err)
 			close(c.readRoutineQuit)
 			c.reconnectAfter <- err
